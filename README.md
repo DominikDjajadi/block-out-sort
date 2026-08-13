@@ -2,6 +2,8 @@
 
 **A slide-to-clear puzzle game with procedurally generated, provably solvable levels and a neural-guided search solver.**
 
+[**Play the browser demo →**](https://dominikdjajadi.github.io/block-out-sort/) · [![CI](https://github.com/DominikDjajadi/block-out-sort/actions/workflows/ci.yml/badge.svg)](https://github.com/DominikDjajadi/block-out-sort/actions/workflows/ci.yml)
+
 ![Block Out Sort gameplay](docs/assets/gameplay.png)
 
 Drag each colored block horizontally or vertically and push it through the matching gate. The browser game has no runtime dependencies; behind it is a Python research stack for exact solving, policy-value learning, bounded PUCT search, adversarial level generation, and reproducible co-training experiments.
