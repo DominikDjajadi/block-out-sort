@@ -1,0 +1,599 @@
+[
+  {
+    "name": "Generated easy #0 (seed 1000)",
+    "cols": 5,
+    "rows": 5,
+    "blocks": [
+      {
+        "color": "blue",
+        "cells": [
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            1
+          ]
+        ]
+      },
+      {
+        "color": "green",
+        "cells": [
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            4
+          ]
+        ]
+      },
+      {
+        "color": "yellow",
+        "cells": [
+          [
+            3,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            4,
+            1
+          ]
+        ]
+      }
+    ],
+    "exits": [
+      {
+        "edge": "bottom",
+        "color": "yellow",
+        "start": 1,
+        "length": 3
+      },
+      {
+        "edge": "left",
+        "color": "blue",
+        "start": 0,
+        "length": 3
+      },
+      {
+        "edge": "right",
+        "color": "green",
+        "start": 1,
+        "length": 2
+      }
+    ]
+  },
+  {
+    "name": "Generated medium #1 (seed 1001)",
+    "cols": 5,
+    "rows": 5,
+    "blocks": [
+      {
+        "color": "purple",
+        "cells": [
+          [
+            4,
+            0
+          ],
+          [
+            3,
+            0
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            3,
+            1
+          ]
+        ]
+      },
+      {
+        "color": "purple",
+        "cells": [
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            1
+          ]
+        ]
+      },
+      {
+        "color": "purple",
+        "cells": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      },
+      {
+        "color": "orange",
+        "cells": [
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            2,
+            3
+          ]
+        ]
+      },
+      {
+        "color": "orange",
+        "cells": [
+          [
+            3,
+            4
+          ],
+          [
+            3,
+            3
+          ]
+        ]
+      }
+    ],
+    "exits": [
+      {
+        "edge": "top",
+        "color": "purple",
+        "start": 0,
+        "length": 2
+      },
+      {
+        "edge": "bottom",
+        "color": "orange",
+        "start": 1,
+        "length": 3
+      }
+    ]
+  },
+  {
+    "name": "Generated hard #2 (seed 1002)",
+    "cols": 5,
+    "rows": 5,
+    "blocks": [
+      {
+        "color": "orange",
+        "cells": [
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            1
+          ]
+        ]
+      },
+      {
+        "color": "red",
+        "cells": [
+          [
+            3,
+            3
+          ],
+          [
+            4,
+            3
+          ],
+          [
+            4,
+            4
+          ]
+        ]
+      },
+      {
+        "color": "orange",
+        "cells": [
+          [
+            3,
+            1
+          ],
+          [
+            4,
+            1
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            3,
+            0
+          ]
+        ]
+      },
+      {
+        "color": "red",
+        "cells": [
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            3
+          ]
+        ]
+      },
+      {
+        "color": "teal",
+        "cells": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            0
+          ]
+        ]
+      },
+      {
+        "color": "orange",
+        "cells": [
+          [
+            3,
+            4
+          ],
+          [
+            2,
+            4
+          ]
+        ]
+      }
+    ],
+    "exits": [
+      {
+        "edge": "bottom",
+        "color": "orange",
+        "start": 1,
+        "length": 3
+      },
+      {
+        "edge": "left",
+        "color": "teal",
+        "start": 3,
+        "length": 2
+      },
+      {
+        "edge": "right",
+        "color": "red",
+        "start": 1,
+        "length": 2
+      }
+    ]
+  },
+  {
+    "name": "Generated easy #3 (seed 1003)",
+    "cols": 5,
+    "rows": 5,
+    "blocks": [
+      {
+        "color": "teal",
+        "cells": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      },
+      {
+        "color": "pink",
+        "cells": [
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            0
+          ]
+        ]
+      },
+      {
+        "color": "red",
+        "cells": [
+          [
+            3,
+            4
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            3
+          ]
+        ]
+      }
+    ],
+    "exits": [
+      {
+        "edge": "top",
+        "color": "red",
+        "start": 3,
+        "length": 2
+      },
+      {
+        "edge": "bottom",
+        "color": "teal",
+        "start": 0,
+        "length": 2
+      },
+      {
+        "edge": "right",
+        "color": "pink",
+        "start": 1,
+        "length": 2
+      }
+    ]
+  },
+  {
+    "name": "Generated medium #4 (seed 1004)",
+    "cols": 5,
+    "rows": 5,
+    "blocks": [
+      {
+        "color": "purple",
+        "cells": [
+          [
+            3,
+            4
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            4,
+            3
+          ]
+        ]
+      },
+      {
+        "color": "teal",
+        "cells": [
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            2,
+            1
+          ]
+        ]
+      },
+      {
+        "color": "red",
+        "cells": [
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            2
+          ]
+        ]
+      },
+      {
+        "color": "purple",
+        "cells": [
+          [
+            1,
+            3
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            0,
+            4
+          ]
+        ]
+      }
+    ],
+    "exits": [
+      {
+        "edge": "top",
+        "color": "purple",
+        "start": 3,
+        "length": 2
+      },
+      {
+        "edge": "bottom",
+        "color": "red",
+        "start": 1,
+        "length": 2
+      },
+      {
+        "edge": "right",
+        "color": "teal",
+        "start": 0,
+        "length": 3
+      }
+    ]
+  },
+  {
+    "name": "Generated hard #5 (seed 1005)",
+    "cols": 5,
+    "rows": 5,
+    "blocks": [
+      {
+        "color": "blue",
+        "cells": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      },
+      {
+        "color": "blue",
+        "cells": [
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            3
+          ]
+        ]
+      },
+      {
+        "color": "blue",
+        "cells": [
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            0
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            0
+          ]
+        ]
+      },
+      {
+        "color": "orange",
+        "cells": [
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            3
+          ]
+        ]
+      },
+      {
+        "color": "orange",
+        "cells": [
+          [
+            0,
+            4
+          ],
+          [
+            0,
+            3
+          ]
+        ]
+      },
+      {
+        "color": "orange",
+        "cells": [
+          [
+            4,
+            3
+          ],
+          [
+            4,
+            4
+          ]
+        ]
+      }
+    ],
+    "exits": [
+      {
+        "edge": "bottom",
+        "color": "blue",
+        "start": 0,
+        "length": 3
+      },
+      {
+        "edge": "right",
+        "color": "orange",
+        "start": 0,
+        "length": 3
+      }
+    ]
+  }
+]

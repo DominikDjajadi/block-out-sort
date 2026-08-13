@@ -1,0 +1,325 @@
+{
+  "name": "Irregular exit",
+  "level": {
+    "name": "Extrude",
+    "cols": 4,
+    "rows": 4,
+    "blocks": [],
+    "exits": [
+      {
+        "edge": "top",
+        "start": 1,
+        "length": 2,
+        "color": "red"
+      }
+    ]
+  },
+  "tests": [
+    {
+      "name": "irregular exit blocked by trailing-cell collision",
+      "setup": {
+        "blocks": [
+          {
+            "color": "red",
+            "cells": [
+              [
+                0,
+                1
+              ],
+              [
+                1,
+                1
+              ],
+              [
+                2,
+                1
+              ],
+              [
+                2,
+                2
+              ]
+            ]
+          },
+          {
+            "color": "blue",
+            "cells": [
+              [
+                0,
+                2
+              ]
+            ]
+          }
+        ]
+      },
+      "expect": {
+        "canonicalKey": "blue#0#0,2|red#0#0,1;1,1;2,1;2,2",
+        "cleared": 0,
+        "terminal": false,
+        "legalActions": [
+          {
+            "color": "blue",
+            "cells": [
+              [
+                0,
+                2
+              ]
+            ],
+            "dir": "down",
+            "distance": 1,
+            "exit": false
+          },
+          {
+            "color": "blue",
+            "cells": [
+              [
+                0,
+                2
+              ]
+            ],
+            "dir": "right",
+            "distance": 1,
+            "exit": false
+          },
+          {
+            "color": "red",
+            "cells": [
+              [
+                0,
+                1
+              ],
+              [
+                1,
+                1
+              ],
+              [
+                2,
+                1
+              ],
+              [
+                2,
+                2
+              ]
+            ],
+            "dir": "down",
+            "distance": 1,
+            "exit": false
+          },
+          {
+            "color": "red",
+            "cells": [
+              [
+                0,
+                1
+              ],
+              [
+                1,
+                1
+              ],
+              [
+                2,
+                1
+              ],
+              [
+                2,
+                2
+              ]
+            ],
+            "dir": "left",
+            "distance": 1,
+            "exit": false
+          }
+        ]
+      },
+      "apply": [
+        {
+          "color": "red",
+          "cells": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              2,
+              2
+            ]
+          ],
+          "dir": "up",
+          "distance": 0,
+          "exit": true
+        }
+      ],
+      "expectError": true
+    },
+    {
+      "name": "irregular exit succeeds when path is clear",
+      "setup": {
+        "blocks": [
+          {
+            "color": "red",
+            "cells": [
+              [
+                0,
+                1
+              ],
+              [
+                1,
+                1
+              ],
+              [
+                2,
+                1
+              ],
+              [
+                2,
+                2
+              ]
+            ]
+          }
+        ]
+      },
+      "expect": {
+        "canonicalKey": "red#0#0,1;1,1;2,1;2,2",
+        "cleared": 0,
+        "terminal": false,
+        "legalActions": [
+          {
+            "color": "red",
+            "cells": [
+              [
+                0,
+                1
+              ],
+              [
+                1,
+                1
+              ],
+              [
+                2,
+                1
+              ],
+              [
+                2,
+                2
+              ]
+            ],
+            "dir": "down",
+            "distance": 1,
+            "exit": false
+          },
+          {
+            "color": "red",
+            "cells": [
+              [
+                0,
+                1
+              ],
+              [
+                1,
+                1
+              ],
+              [
+                2,
+                1
+              ],
+              [
+                2,
+                2
+              ]
+            ],
+            "dir": "left",
+            "distance": 1,
+            "exit": false
+          },
+          {
+            "color": "red",
+            "cells": [
+              [
+                0,
+                1
+              ],
+              [
+                1,
+                1
+              ],
+              [
+                2,
+                1
+              ],
+              [
+                2,
+                2
+              ]
+            ],
+            "dir": "right",
+            "distance": 1,
+            "exit": false
+          },
+          {
+            "color": "red",
+            "cells": [
+              [
+                0,
+                1
+              ],
+              [
+                1,
+                1
+              ],
+              [
+                2,
+                1
+              ],
+              [
+                2,
+                2
+              ]
+            ],
+            "dir": "up",
+            "distance": 0,
+            "exit": true
+          }
+        ]
+      },
+      "apply": [
+        {
+          "color": "red",
+          "cells": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              2,
+              2
+            ]
+          ],
+          "dir": "up",
+          "distance": 0,
+          "exit": true
+        }
+      ],
+      "expectError": false,
+      "after": {
+        "canonicalKey": "",
+        "cleared": 1,
+        "terminal": true
+      }
+    }
+  ]
+}

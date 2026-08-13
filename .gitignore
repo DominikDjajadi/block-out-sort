@@ -1,0 +1,52 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.pytest_*/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+*.egg-info/
+.venv/
+venv/
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+*.local
+local.properties
+key.properties
+*.jks
+*.keystore
+*.pem
+*.key
+
+# Training and generated artifacts
+python/runs/
+runs/
+dist/
+build/
+*.pt
+*.pth
+*.ckpt
+*.onnx
+*.npy
+*.npz
+*.pkl
+*.jsonl
+!data/training/pv_examples.jsonl
+!data/training/pv_smoke.jsonl
+*.log
+*.zip
+*.tar
+*.7z
+
+# Dependencies / editors / operating systems
+node_modules/
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+*.swp

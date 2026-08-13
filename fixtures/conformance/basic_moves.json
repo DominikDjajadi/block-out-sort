@@ -1,0 +1,491 @@
+{
+  "name": "Basic moves",
+  "level": {
+    "name": "Arena",
+    "cols": 5,
+    "rows": 5,
+    "holes": [
+      [
+        4,
+        3
+      ]
+    ],
+    "blocks": [],
+    "exits": [
+      {
+        "edge": "top",
+        "start": 0,
+        "length": 2,
+        "color": "red"
+      },
+      {
+        "edge": "top",
+        "start": 2,
+        "length": 2,
+        "color": "blue"
+      },
+      {
+        "edge": "right",
+        "start": 0,
+        "length": 2,
+        "color": "green"
+      },
+      {
+        "edge": "bottom",
+        "start": 0,
+        "length": 2,
+        "color": "yellow"
+      },
+      {
+        "edge": "left",
+        "start": 2,
+        "length": 2,
+        "color": "purple"
+      }
+    ]
+  },
+  "tests": [
+    {
+      "name": "single red mono: stops + matching exit",
+      "setup": {
+        "blocks": [
+          {
+            "color": "red",
+            "cells": [
+              [
+                2,
+                1
+              ]
+            ]
+          }
+        ]
+      },
+      "expect": {
+        "canonicalKey": "red#0#2,1",
+        "cleared": 0,
+        "terminal": false,
+        "legalActions": [
+          {
+            "color": "red",
+            "cells": [
+              [
+                2,
+                1
+              ]
+            ],
+            "dir": "down",
+            "distance": 1,
+            "exit": false
+          },
+          {
+            "color": "red",
+            "cells": [
+              [
+                2,
+                1
+              ]
+            ],
+            "dir": "down",
+            "distance": 2,
+            "exit": false
+          },
+          {
+            "color": "red",
+            "cells": [
+              [
+                2,
+                1
+              ]
+            ],
+            "dir": "left",
+            "distance": 1,
+            "exit": false
+          },
+          {
+            "color": "red",
+            "cells": [
+              [
+                2,
+                1
+              ]
+            ],
+            "dir": "right",
+            "distance": 1,
+            "exit": false
+          },
+          {
+            "color": "red",
+            "cells": [
+              [
+                2,
+                1
+              ]
+            ],
+            "dir": "right",
+            "distance": 2,
+            "exit": false
+          },
+          {
+            "color": "red",
+            "cells": [
+              [
+                2,
+                1
+              ]
+            ],
+            "dir": "right",
+            "distance": 3,
+            "exit": false
+          },
+          {
+            "color": "red",
+            "cells": [
+              [
+                2,
+                1
+              ]
+            ],
+            "dir": "up",
+            "distance": 1,
+            "exit": false
+          },
+          {
+            "color": "red",
+            "cells": [
+              [
+                2,
+                1
+              ]
+            ],
+            "dir": "up",
+            "distance": 2,
+            "exit": false
+          },
+          {
+            "color": "red",
+            "cells": [
+              [
+                2,
+                1
+              ]
+            ],
+            "dir": "up",
+            "distance": 2,
+            "exit": true
+          }
+        ]
+      },
+      "apply": [
+        {
+          "color": "red",
+          "cells": [
+            [
+              2,
+              1
+            ]
+          ],
+          "dir": "up",
+          "distance": 2,
+          "exit": true
+        }
+      ],
+      "expectError": false,
+      "after": {
+        "canonicalKey": "",
+        "cleared": 1,
+        "terminal": true
+      }
+    },
+    {
+      "name": "slide stops at another block",
+      "setup": {
+        "blocks": [
+          {
+            "color": "red",
+            "cells": [
+              [
+                2,
+                1
+              ]
+            ]
+          },
+          {
+            "color": "blue",
+            "cells": [
+              [
+                2,
+                3
+              ]
+            ]
+          }
+        ]
+      },
+      "expect": {
+        "canonicalKey": "blue#0#2,3|red#0#2,1",
+        "cleared": 0,
+        "terminal": false
+      },
+      "apply": [
+        {
+          "color": "red",
+          "cells": [
+            [
+              2,
+              1
+            ]
+          ],
+          "dir": "right",
+          "distance": 1,
+          "exit": false
+        }
+      ],
+      "expectError": false,
+      "after": {
+        "canonicalKey": "blue#0#2,3|red#0#2,2",
+        "cleared": 0,
+        "terminal": false
+      }
+    },
+    {
+      "name": "illegal: slide past blocking block",
+      "setup": {
+        "blocks": [
+          {
+            "color": "red",
+            "cells": [
+              [
+                2,
+                1
+              ]
+            ]
+          },
+          {
+            "color": "blue",
+            "cells": [
+              [
+                2,
+                3
+              ]
+            ]
+          }
+        ]
+      },
+      "expect": {
+        "canonicalKey": "blue#0#2,3|red#0#2,1",
+        "cleared": 0,
+        "terminal": false
+      },
+      "apply": [
+        {
+          "color": "red",
+          "cells": [
+            [
+              2,
+              1
+            ]
+          ],
+          "dir": "right",
+          "distance": 2,
+          "exit": false
+        }
+      ],
+      "expectError": true
+    },
+    {
+      "name": "slide stops at hole",
+      "setup": {
+        "blocks": [
+          {
+            "color": "red",
+            "cells": [
+              [
+                4,
+                1
+              ]
+            ]
+          }
+        ]
+      },
+      "expect": {
+        "canonicalKey": "red#0#4,1",
+        "cleared": 0,
+        "terminal": false
+      },
+      "apply": [
+        {
+          "color": "red",
+          "cells": [
+            [
+              4,
+              1
+            ]
+          ],
+          "dir": "right",
+          "distance": 1,
+          "exit": false
+        }
+      ],
+      "expectError": false,
+      "after": {
+        "canonicalKey": "red#0#4,2",
+        "cleared": 0,
+        "terminal": false
+      }
+    },
+    {
+      "name": "illegal: slide into hole",
+      "setup": {
+        "blocks": [
+          {
+            "color": "red",
+            "cells": [
+              [
+                4,
+                1
+              ]
+            ]
+          }
+        ]
+      },
+      "expect": {
+        "canonicalKey": "red#0#4,1",
+        "cleared": 0,
+        "terminal": false
+      },
+      "apply": [
+        {
+          "color": "red",
+          "cells": [
+            [
+              4,
+              1
+            ]
+          ],
+          "dir": "right",
+          "distance": 2,
+          "exit": false
+        }
+      ],
+      "expectError": true
+    },
+    {
+      "name": "nonmatching gate: no exit at edge",
+      "setup": {
+        "blocks": [
+          {
+            "color": "green",
+            "cells": [
+              [
+                2,
+                4
+              ]
+            ]
+          }
+        ]
+      },
+      "expect": {
+        "canonicalKey": "green#0#2,4",
+        "cleared": 0,
+        "terminal": false,
+        "legalActions": [
+          {
+            "color": "green",
+            "cells": [
+              [
+                2,
+                4
+              ]
+            ],
+            "dir": "down",
+            "distance": 1,
+            "exit": false
+          },
+          {
+            "color": "green",
+            "cells": [
+              [
+                2,
+                4
+              ]
+            ],
+            "dir": "down",
+            "distance": 2,
+            "exit": false
+          },
+          {
+            "color": "green",
+            "cells": [
+              [
+                2,
+                4
+              ]
+            ],
+            "dir": "left",
+            "distance": 1,
+            "exit": false
+          },
+          {
+            "color": "green",
+            "cells": [
+              [
+                2,
+                4
+              ]
+            ],
+            "dir": "left",
+            "distance": 2,
+            "exit": false
+          },
+          {
+            "color": "green",
+            "cells": [
+              [
+                2,
+                4
+              ]
+            ],
+            "dir": "left",
+            "distance": 3,
+            "exit": false
+          },
+          {
+            "color": "green",
+            "cells": [
+              [
+                2,
+                4
+              ]
+            ],
+            "dir": "left",
+            "distance": 4,
+            "exit": false
+          },
+          {
+            "color": "green",
+            "cells": [
+              [
+                2,
+                4
+              ]
+            ],
+            "dir": "up",
+            "distance": 1,
+            "exit": false
+          },
+          {
+            "color": "green",
+            "cells": [
+              [
+                2,
+                4
+              ]
+            ],
+            "dir": "up",
+            "distance": 2,
+            "exit": false
+          }
+        ]
+      }
+    }
+  ]
+}

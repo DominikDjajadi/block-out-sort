@@ -1,0 +1,514 @@
+{
+  "name": "Unlocks",
+  "level": {
+    "name": "Unlock Lab",
+    "cols": 5,
+    "rows": 5,
+    "blocks": [],
+    "exits": [
+      {
+        "edge": "top",
+        "start": 0,
+        "length": 2,
+        "color": "red"
+      },
+      {
+        "edge": "bottom",
+        "start": 0,
+        "length": 2,
+        "color": "green",
+        "unlockAt": 1
+      },
+      {
+        "edge": "left",
+        "start": 0,
+        "length": 2,
+        "color": "blue"
+      }
+    ],
+    "lockedRegions": [
+      {
+        "cells": [
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            3
+          ]
+        ],
+        "unlockAt": 2
+      }
+    ]
+  },
+  "tests": [
+    {
+      "name": "frozen block: immovable before threshold",
+      "setup": {
+        "blocks": [
+          {
+            "color": "red",
+            "cells": [
+              [
+                0,
+                1
+              ]
+            ]
+          },
+          {
+            "color": "blue",
+            "cells": [
+              [
+                2,
+                0
+              ]
+            ],
+            "unlockAt": 1
+          }
+        ]
+      },
+      "expect": {
+        "canonicalKey": "blue#1#2,0|red#0#0,1",
+        "cleared": 0,
+        "terminal": false,
+        "legalActions": [
+          {
+            "color": "red",
+            "cells": [
+              [
+                0,
+                1
+              ]
+            ],
+            "dir": "down",
+            "distance": 1,
+            "exit": false
+          },
+          {
+            "color": "red",
+            "cells": [
+              [
+                0,
+                1
+              ]
+            ],
+            "dir": "down",
+            "distance": 2,
+            "exit": false
+          },
+          {
+            "color": "red",
+            "cells": [
+              [
+                0,
+                1
+              ]
+            ],
+            "dir": "down",
+            "distance": 3,
+            "exit": false
+          },
+          {
+            "color": "red",
+            "cells": [
+              [
+                0,
+                1
+              ]
+            ],
+            "dir": "down",
+            "distance": 4,
+            "exit": false
+          },
+          {
+            "color": "red",
+            "cells": [
+              [
+                0,
+                1
+              ]
+            ],
+            "dir": "left",
+            "distance": 1,
+            "exit": false
+          },
+          {
+            "color": "red",
+            "cells": [
+              [
+                0,
+                1
+              ]
+            ],
+            "dir": "right",
+            "distance": 1,
+            "exit": false
+          },
+          {
+            "color": "red",
+            "cells": [
+              [
+                0,
+                1
+              ]
+            ],
+            "dir": "right",
+            "distance": 2,
+            "exit": false
+          },
+          {
+            "color": "red",
+            "cells": [
+              [
+                0,
+                1
+              ]
+            ],
+            "dir": "right",
+            "distance": 3,
+            "exit": false
+          },
+          {
+            "color": "red",
+            "cells": [
+              [
+                0,
+                1
+              ]
+            ],
+            "dir": "up",
+            "distance": 0,
+            "exit": true
+          }
+        ]
+      },
+      "apply": [
+        {
+          "color": "red",
+          "cells": [
+            [
+              0,
+              1
+            ]
+          ],
+          "dir": "up",
+          "distance": 0,
+          "exit": true
+        }
+      ],
+      "expectError": false,
+      "after": {
+        "canonicalKey": "blue#1#2,0",
+        "cleared": 1,
+        "terminal": false,
+        "legalActions": [
+          {
+            "color": "blue",
+            "cells": [
+              [
+                2,
+                0
+              ]
+            ],
+            "dir": "down",
+            "distance": 1,
+            "exit": false
+          },
+          {
+            "color": "blue",
+            "cells": [
+              [
+                2,
+                0
+              ]
+            ],
+            "dir": "down",
+            "distance": 2,
+            "exit": false
+          },
+          {
+            "color": "blue",
+            "cells": [
+              [
+                2,
+                0
+              ]
+            ],
+            "dir": "right",
+            "distance": 1,
+            "exit": false
+          },
+          {
+            "color": "blue",
+            "cells": [
+              [
+                2,
+                0
+              ]
+            ],
+            "dir": "up",
+            "distance": 1,
+            "exit": false
+          },
+          {
+            "color": "blue",
+            "cells": [
+              [
+                2,
+                0
+              ]
+            ],
+            "dir": "up",
+            "distance": 2,
+            "exit": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "locked gate: exit illegal before unlock",
+      "setup": {
+        "blocks": [
+          {
+            "color": "green",
+            "cells": [
+              [
+                4,
+                1
+              ]
+            ]
+          },
+          {
+            "color": "red",
+            "cells": [
+              [
+                0,
+                1
+              ]
+            ]
+          }
+        ]
+      },
+      "expect": {
+        "canonicalKey": "green#0#4,1|red#0#0,1",
+        "cleared": 0,
+        "terminal": false
+      },
+      "apply": [
+        {
+          "color": "green",
+          "cells": [
+            [
+              4,
+              1
+            ]
+          ],
+          "dir": "down",
+          "distance": 0,
+          "exit": true
+        }
+      ],
+      "expectError": true
+    },
+    {
+      "name": "locked gate: exit legal after unlock",
+      "setup": {
+        "blocks": [
+          {
+            "color": "green",
+            "cells": [
+              [
+                4,
+                1
+              ]
+            ]
+          },
+          {
+            "color": "red",
+            "cells": [
+              [
+                0,
+                1
+              ]
+            ]
+          }
+        ]
+      },
+      "expect": {
+        "canonicalKey": "green#0#4,1|red#0#0,1",
+        "cleared": 0,
+        "terminal": false
+      },
+      "apply": [
+        {
+          "color": "red",
+          "cells": [
+            [
+              0,
+              1
+            ]
+          ],
+          "dir": "up",
+          "distance": 0,
+          "exit": true
+        },
+        {
+          "color": "green",
+          "cells": [
+            [
+              4,
+              1
+            ]
+          ],
+          "dir": "down",
+          "distance": 0,
+          "exit": true
+        }
+      ],
+      "expectError": false,
+      "after": {
+        "canonicalKey": "",
+        "cleared": 2,
+        "terminal": true
+      }
+    },
+    {
+      "name": "locked region: wall before threshold",
+      "setup": {
+        "blocks": [
+          {
+            "color": "red",
+            "cells": [
+              [
+                0,
+                0
+              ]
+            ]
+          },
+          {
+            "color": "red",
+            "cells": [
+              [
+                0,
+                1
+              ]
+            ]
+          },
+          {
+            "color": "blue",
+            "cells": [
+              [
+                2,
+                1
+              ]
+            ]
+          }
+        ]
+      },
+      "expect": {
+        "canonicalKey": "blue#0#2,1|red#0#0,0|red#0#0,1",
+        "cleared": 0,
+        "terminal": false
+      },
+      "apply": [
+        {
+          "color": "blue",
+          "cells": [
+            [
+              2,
+              1
+            ]
+          ],
+          "dir": "right",
+          "distance": 1,
+          "exit": false
+        }
+      ],
+      "expectError": true
+    },
+    {
+      "name": "locked region: passable after threshold",
+      "setup": {
+        "blocks": [
+          {
+            "color": "red",
+            "cells": [
+              [
+                0,
+                0
+              ]
+            ]
+          },
+          {
+            "color": "red",
+            "cells": [
+              [
+                0,
+                1
+              ]
+            ]
+          },
+          {
+            "color": "blue",
+            "cells": [
+              [
+                2,
+                1
+              ]
+            ]
+          }
+        ]
+      },
+      "expect": {
+        "canonicalKey": "blue#0#2,1|red#0#0,0|red#0#0,1",
+        "cleared": 0,
+        "terminal": false
+      },
+      "apply": [
+        {
+          "color": "red",
+          "cells": [
+            [
+              0,
+              0
+            ]
+          ],
+          "dir": "up",
+          "distance": 0,
+          "exit": true
+        },
+        {
+          "color": "red",
+          "cells": [
+            [
+              0,
+              1
+            ]
+          ],
+          "dir": "up",
+          "distance": 0,
+          "exit": true
+        },
+        {
+          "color": "blue",
+          "cells": [
+            [
+              2,
+              1
+            ]
+          ],
+          "dir": "right",
+          "distance": 3,
+          "exit": false
+        }
+      ],
+      "expectError": false,
+      "after": {
+        "canonicalKey": "blue#0#2,4",
+        "cleared": 2,
+        "terminal": false
+      }
+    }
+  ]
+}

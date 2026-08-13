@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Block Out Sort</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app">
+    <header class="topbar">
+      <button id="btn-prev" class="icon-btn" title="Previous level">&#8249;</button>
+
+      <div class="stat">
+        <span class="stat-label">Level</span>
+        <span class="stat-value" id="ui-level">1</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Moves</span>
+        <span class="stat-value" id="ui-moves">0</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Cleared</span>
+        <span class="stat-value" id="ui-cleared">0/0</span>
+      </div>
+
+      <button id="btn-next" class="icon-btn" title="Next level">&#8250;</button>
+    </header>
+
+    <p class="objective" id="ui-name">Slide each block into its matching exit to clear the board.</p>
+
+    <div class="board-wrap">
+      <canvas id="board"></canvas>
+
+      <div id="win-overlay" class="overlay hidden">
+        <div class="overlay-card">
+          <div class="overlay-emoji">&#127881;</div>
+          <h2>Level Cleared!</h2>
+          <p id="win-stats">Nicely sorted.</p>
+          <div class="overlay-actions">
+            <button id="btn-replay" class="btn ghost">Replay</button>
+            <button id="btn-continue" class="btn primary">Next Level</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="bottombar">
+      <div class="footer-left">
+        <button id="btn-restart" class="btn ghost">&#8635; Restart</button>
+        <button id="btn-random" class="btn primary">&#127922; Random</button>
+      </div>
+      <span class="hint">Drag a block toward the gate that matches its color.</span>
+    </footer>
+  </div>
+
+  <script src="js/levels.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/solver.js"></script>
+  <script src="js/generator.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
