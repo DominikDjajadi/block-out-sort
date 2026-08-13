@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from pathlib import Path
+import json
 
 import pytest
 
@@ -25,19 +25,56 @@ def _row(signature: str, band: str, solved: dict[int, bool]):
     }
 
 
-def test_fresh_midbudget_pool_yields_balanced_stable_retention_slice():
-    source = Path(__file__).resolve().parents[2] / (
-        "data/eval/midbudget_dev_seed8240_v1.jsonl")
-    selected, all_signatures, manifest = load_retention_pool(
-        source, per_band=2)
-    assert len(all_signatures) == 200
-    assert len(selected) == 8
-    assert manifest["source_band_counts"] == {
+def _write_retention_pool(path, band_counts: dict[str, int]) -> None:
+    """Write deterministic synthetic levels for retention-selection tests."""
+    records = []
+    index = 0
+    for band, count in band_counts.items():
+        for _ in range(count):
+            # A unique hole makes the static signature unique without relying
+            # on private development pools or mutable level names.
+            hole = [index // 31, index % 31]
+            records.append({
+                "level": {
+                    "name": f"synthetic-retention-{index:03d}",
+                    "cols": 32,
+                    "rows": 32,
+                    "holes": [hole],
+                    "blocks": [{
+                        "color": "red",
+                        "cells": [[31, 31]],
+                    }],
+                    "exits": [{
+                        "edge": "bottom",
+                        "start": 31,
+                        "length": 1,
+                        "color": "red",
+                    }],
+                },
+                "baseline_filter": {"difficulty_stratum": band},
+            })
+            index += 1
+    # Input order must not influence the signature-sorted selection.
+    path.write_text(
+        "".join(json.dumps(record) + "\n" for record in reversed(records)),
+        encoding="utf-8",
+    )
+
+
+def test_fresh_midbudget_pool_yields_balanced_stable_retention_slice(tmp_path):
+    source = tmp_path / "balanced_retention.jsonl"
+    expected_counts = {
         "first_solved_72_through_88": 50,
         "first_solved_95_through_112": 50,
         "solved_by_64": 50,
         "first_solved_120_or_later_or_unsolved": 50,
     }
+    _write_retention_pool(source, expected_counts)
+    selected, all_signatures, manifest = load_retention_pool(
+        source, per_band=2)
+    assert len(all_signatures) == 200
+    assert len(selected) == 8
+    assert manifest["source_band_counts"] == expected_counts
     for band in manifest["source_band_counts"]:
         signatures = [
             row["static_level_signature"] for row in selected
@@ -46,20 +83,21 @@ def test_fresh_midbudget_pool_yields_balanced_stable_retention_slice():
         assert len(signatures) == 2
 
 
-def test_full_retention_pool_preserves_intentionally_unequal_strata():
-    source = Path(__file__).resolve().parents[2] / (
-        "data/eval/retention_replication_seed8250_v1.jsonl")
-    selected, all_signatures, manifest = load_retention_pool(
-        source, per_band=None)
-    assert len(all_signatures) == 500
-    assert len(selected) == 500
-    assert manifest["selection_policy"] == "all_source_levels_v1"
-    assert manifest["selected_band_counts"] == {
+def test_full_retention_pool_preserves_intentionally_unequal_strata(tmp_path):
+    source = tmp_path / "unequal_retention.jsonl"
+    expected_counts = {
         "first_solved_120_or_later_or_unsolved": 100,
         "first_solved_72_through_88": 100,
         "first_solved_95_through_112": 200,
         "solved_by_64": 100,
     }
+    _write_retention_pool(source, expected_counts)
+    selected, all_signatures, manifest = load_retention_pool(
+        source, per_band=None)
+    assert len(all_signatures) == 500
+    assert len(selected) == 500
+    assert manifest["selection_policy"] == "all_source_levels_v1"
+    assert manifest["selected_band_counts"] == expected_counts
 
 
 def test_retention_summary_is_paired_and_band_specific():
