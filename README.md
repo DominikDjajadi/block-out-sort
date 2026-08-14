@@ -1,59 +1,47 @@
 # Block Out Sort
 
-**A slide-to-clear puzzle game with procedurally generated, provably solvable levels and a neural-guided search solver.**
-
-[**Play the browser demo →**](https://dominikdjajadi.github.io/block-out-sort/) · [![CI](https://github.com/DominikDjajadi/block-out-sort/actions/workflows/ci.yml/badge.svg)](https://github.com/DominikDjajadi/block-out-sort/actions/workflows/ci.yml)
+[Play the browser version](https://dominikdjajadi.github.io/block-out-sort/) · [![CI](https://github.com/DominikDjajadi/block-out-sort/actions/workflows/ci.yml/badge.svg)](https://github.com/DominikDjajadi/block-out-sort/actions/workflows/ci.yml)
 
 ![Block Out Sort gameplay](docs/assets/gameplay.png)
 
-Drag each colored block horizontally or vertically and push it through the matching gate. The browser game has no runtime dependencies; behind it is a Python research stack for exact solving, policy-value learning, bounded PUCT search, adversarial level generation, and reproducible co-training experiments.
+Block Out Sort is a puzzle game about sliding colored blocks through matching gates. I started it as a small browser game and later used it to experiment with procedural generation, exact solvers, and neural-guided search.
 
-> **Status:** The browser game is playable. The solver and training pipeline are active research, and mobile packaging is planned after the model is ready.
+The browser game is playable now. The solver and training work are still in progress.
 
-## Why this project is interesting
+## Playing the game
 
-- **One ruleset, two implementations.** JavaScript powers the playable game while a matching Python environment supports search and training. Shared conformance fixtures keep them behaviorally aligned.
-- **Solvability by construction.** The generator builds levels in reverse from valid exits, retaining a witness that every accepted puzzle can be solved.
-- **Exact and learned search.** A*/BFS provide reference solutions and labels; a PyTorch policy-value model guides bounded PUCT search.
-- **Research-grade evaluation.** Training runs are resumable and evaluated with frozen pools, candidate-blind confirmation, paired tests, per-budget regression guards, and explicit checkpoint ancestry.
-- **An independently confirmed improvement.** The current research incumbent improved the preregistered weighted solve rate from `0.6104` to `0.6260` on 500 fresh levels, with a positive paired-bootstrap lower bound and no tested-budget regression.
+Drag a block horizontally or vertically. A block is cleared when it crosses a gate of the same color; clear every block to finish the level. Later levels add frozen blocks, locked gates, and locked regions.
 
-[Read the research result](docs/research-results.md) · [See the architecture](docs/architecture.md) · [Review the encoding contract](docs/neural_encoding.md)
-
-## Play locally
-
-No build step is required:
+To run it locally, serve the repository root with any static file server. For example:
 
 ```bash
 python -m http.server 8000
 ```
 
-Then open <http://localhost:8000>. You can also open `index.html` directly in a modern browser.
+Then open <http://localhost:8000>. There is no frontend build step or runtime dependency.
 
-### Controls
+## How the project works
 
-- Drag a block up, down, left, or right.
-- A block clears when it crosses a matching gate.
-- Clear every block to finish the level.
-- Frozen blocks, locked gates, and locked regions introduce delayed interactions on later levels.
+There are matching JavaScript and Python implementations of the game rules. The JavaScript version runs the game, while the Python version is used for generation, solving, training, and evaluation. Shared fixtures test that both implementations behave the same way.
 
-## Architecture
+Levels are generated backwards from a completed board. This gives the generator a known solution instead of relying on random boards that may be impossible.
 
-```mermaid
-flowchart LR
-    UI["Browser game<br/>JavaScript + Canvas"] --> JS["JavaScript rules engine"]
-    JS <-->|"shared fixtures"| PY["Python rules engine"]
-    PY --> EXACT["Exact A* / BFS<br/>and value oracle"]
-    PY --> SEARCH["Neural-guided<br/>PUCT search"]
-    EXACT --> DATA["Policy-value<br/>training data"]
-    DATA --> MODEL["PyTorch<br/>policy-value model"]
-    MODEL --> SEARCH
-    SEARCH --> LOOP["Resumable expert iteration<br/>and co-training"]
-    DESIGNER["Constrained adversarial<br/>level designer"] --> LOOP
-    LOOP --> MODEL
-```
+The Python side includes:
 
-The important boundary is the rules engine: search, generation, labels, training, and evaluation all operate on the same game semantics. See [docs/architecture.md](docs/architecture.md) for the full data and evaluation flow.
+- A* and BFS solvers for exact solutions
+- a PyTorch policy/value model
+- PUCT search guided by the model
+- expert-iteration and co-training experiments
+- an adversarial level designer
+- resumable runs and paired model evaluation
+
+The longer explanation is in [the architecture notes](docs/architecture.md). The model input and output format is documented in [the encoding notes](docs/neural_encoding.md).
+
+## Current solver result
+
+The latest confirmed experiment compared the previous solver with a cumulatively trained learner on 500 newly generated levels. Across search budgets of 20, 34, 57, 95, and 160 simulations, the weighted solve rate increased from `0.6104` to `0.6260`. The paired-bootstrap 95% lower bound was `+0.0044`, and none of the individual budgets regressed in that test.
+
+That is an encouraging result, but it is not a finished production model. The checkpoint is not included in this repository, and search difficulty is not necessarily the same as difficulty for a human player. The experiment and its limitations are described in [research results](docs/research-results.md).
 
 ## Python setup
 
@@ -74,13 +62,13 @@ python -m pip install -e ".[dev]"
 pytest -q
 ```
 
-Run the cross-language conformance suite from the repository root:
+The JavaScript/Python conformance tests run from the repository root:
 
 ```bash
 node tools/run_conformance.js
 ```
 
-Solve a bundled level exactly:
+To solve the first bundled level with BFS:
 
 ```bash
 cd python
@@ -91,29 +79,16 @@ python -m blocksort.cli.solve \
   --bfs
 ```
 
-## Code tour
+## Repository layout
 
-| Area | Starting point |
-| --- | --- |
-| Browser game and rendering | [`js/main.js`](js/main.js) |
-| Canonical JavaScript rules | [`js/game.js`](js/game.js) |
-| Procedural generation | [`js/generator.js`](js/generator.js) |
-| Python environment | [`python/blocksort/environment.py`](python/blocksort/environment.py) |
-| Exact A*/BFS solver | [`python/blocksort/solver.py`](python/blocksort/solver.py) |
-| Policy-value model | [`python/blocksort/training/model.py`](python/blocksort/training/model.py) |
-| Neural-guided PUCT | [`python/blocksort/search/graph_search.py`](python/blocksort/search/graph_search.py) |
-| Expert iteration | [`python/blocksort/expert_iteration/`](python/blocksort/expert_iteration/) |
-| Adversarial designer | [`python/blocksort/designer/`](python/blocksort/designer/) |
-| Co-training and promotion | [`python/blocksort/cotraining/`](python/blocksort/cotraining/) |
-| Cross-language fixtures | [`fixtures/conformance/`](fixtures/conformance/) |
-| Test suite | [`python/tests/`](python/tests/) |
+- `js/` contains the browser game, rendering, rules, and generator.
+- `python/blocksort/` contains the Python environment, solvers, model, search, and training code.
+- `python/tests/` contains the Python test suite.
+- `fixtures/` contains levels and cross-language conformance cases.
+- `docs/` contains the architecture, model encoding, and research notes.
 
-## Repository scope
-
-This public repository contains the game, research implementation, tests, fixtures, three versioned smoke/sample datasets, and methodology. Large replay buffers, raw experiment directories, sealed evaluation pools, disposable checkpoints, and machine-specific logs are deliberately excluded. The included datasets make the test suite self-contained without exposing experiment-scale training data.
-
-No production model checkpoint is bundled yet. The documented result is a research milestone, not a claim that the solver is production-ready or that search difficulty perfectly predicts human difficulty.
+Large replay buffers, experiment directories, evaluation pools, disposable checkpoints, and machine-specific logs are not included. Three small versioned datasets are kept in the repository so the test suite can run on its own.
 
 ## License
 
-Copyright © 2026 Dominik Djajadi. All rights reserved. The source is public for portfolio review and technical discussion, but no permission to copy, use, modify, or distribute it is granted. See [LICENSE](LICENSE).
+Copyright © 2026 Dominik Djajadi. All rights reserved. The code is available here for viewing and technical discussion; permission to copy, modify, use, or distribute it is not granted. See [LICENSE](LICENSE).
