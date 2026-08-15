@@ -8,6 +8,8 @@ Block Out Sort is a puzzle game about sliding colored blocks through matching ga
 
 The browser game is playable now. The solver and training work are still in progress.
 
+Development note: This repository is a cleaned public snapshot of a longer-running private development project, so its Git history does not reflect the full development timeline.
+
 ## Playing the game
 
 Drag a block horizontally or vertically. A block is cleared when it crosses a gate of the same color; clear every block to finish the level. Later levels add frozen blocks, locked gates, and locked regions.
